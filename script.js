@@ -10,7 +10,6 @@ nextButton.addEventListener('click',()=>{
      clearStatus(document.body);
      currentIndex++;
      showQuestion(questions);
-     console.log(currentIndex);
 })
 
 function startGame(){
