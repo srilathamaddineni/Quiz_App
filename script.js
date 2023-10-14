@@ -3,29 +3,33 @@ const questionBlock=document.getElementById("question-container");
 const nextButton=document.getElementById("nxt-btn");
 const qtn=document.getElementById("question");
 const answerButtons=document.getElementById("answer-buttons");
+const result=document.getElementById("Result");
 let currentIndex;
 startButton.addEventListener('click',startGame);
 nextButton.addEventListener('click',()=>{
+     clearStatus(document.body);
      currentIndex++;
-     clearStatus();
      showQuestion(questions);
+     console.log(currentIndex);
 })
 
 function startGame(){
+  clearStatus(document.body);
   startButton.classList.add('hide');
   questionBlock.classList.remove('hide');
+  nextButton.classList.remove('hide');
   currentIndex=0;
-}
-function setNextQuestion(){
-    resetState();
-    showQuestion(questions);
+  showQuestion(questions);
 }
 
 function showQuestion(questions){
-    if(currentIndex>questions.length-2)
+    if(currentIndex===questions.length-1)
     {
         nextButton.classList.add('hide');
+        startButton.innerText="Restart";
+        startButton.classList.remove('hide');
     }
+    
    qtn.innerText=questions[currentIndex].question;
    questions[currentIndex].answers.forEach(answer=>{
       const button=document.createElement('button');
@@ -34,20 +38,12 @@ function showQuestion(questions){
       if(answer.correct)
       {
          button.dataset.correct=answer.correct;
+         
       }
       button.addEventListener('click',selectAnswer);
       answerButtons.appendChild(button);
       
    })
-}
-function resetState(){
-    clearStatusClass(document.body);
-    nextButton.classList.add('hide');
-    while(answerButtons.firstChild)
-    {
-        answerButtons.removeChild(answerButtons.firstChild);
-    }
-
 }
 function selectAnswer(e){
     const selectedButton=e.target;
@@ -58,7 +54,7 @@ function selectAnswer(e){
     })
 }
 function setStatusClass(element,correct){
-   clearStatus(element);
+
    if(correct){
      element.classList.add('correct');
    }
@@ -66,8 +62,12 @@ function setStatusClass(element,correct){
     element.classList.add('wrong');
    }
 }
-function clearStatus(element){
+function clearStatus(element)
+{
+    element.classList.remove('correct');
+    element.classList.remove('wrong');
     answerButtons.innerHTML='';
+    
 }
 const questions=[
     {
@@ -96,5 +96,14 @@ const questions=[
             {text:'Facebook', correct:false},
             {text:'Twitter', correct:false}
         ]
+    },
+    {
+       question:'Which country has the highest population',
+       answers:[
+        {text:'India', correct:true},
+        {text:'china', correct:false},
+        {text:'USA',correct:false},
+        {text:'Japan', correct:false}
+       ]
     }
   ]
