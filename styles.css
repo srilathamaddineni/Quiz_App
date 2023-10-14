@@ -48,7 +48,7 @@ body.wrong{
     outline:none;
 }
 .btn:hover{
-    background-color: black;
+    border-color: black;
 }
 .btn.correct{
     --hue:var(--hue-correct);
